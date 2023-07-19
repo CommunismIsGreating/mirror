@@ -32,6 +32,10 @@ public class PlayerState_idle : PlayerState
         {
             stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_fall)]);
         }
+        if (input.grab && script.GrabTimerGetTarget())
+        {
+            stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_grab)]);
+        }
         currentSpeed =Mathf.MoveTowards(currentSpeed, 0f,deceration*Time.deltaTime);
     }
     public override void PhysicsUpdate()

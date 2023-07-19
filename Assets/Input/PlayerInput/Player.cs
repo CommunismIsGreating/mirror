@@ -53,6 +53,24 @@ public partial class @Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Grab"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ee9ca6f-b09b-4364-a56a-f5511dc201ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attach"",
+                    ""type"": ""Button"",
+                    ""id"": ""802be0f6-00b4-4c04-aa6d-972632b55c64"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -176,6 +194,28 @@ public partial class @Player: IInputActionCollection2, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""061265be-2643-437f-8218-546eb2f0d6c4"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e84d58de-37e2-44fb-ab4e-a1c1df6a5fa9"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attach"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +227,8 @@ public partial class @Player: IInputActionCollection2, IDisposable
         m_testmap_Dodge = m_testmap.FindAction("Dodge", throwIfNotFound: true);
         m_testmap_Move = m_testmap.FindAction("Move", throwIfNotFound: true);
         m_testmap_Jump = m_testmap.FindAction("Jump", throwIfNotFound: true);
+        m_testmap_Grab = m_testmap.FindAction("Grab", throwIfNotFound: true);
+        m_testmap_Attach = m_testmap.FindAction("Attach", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +293,8 @@ public partial class @Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_testmap_Dodge;
     private readonly InputAction m_testmap_Move;
     private readonly InputAction m_testmap_Jump;
+    private readonly InputAction m_testmap_Grab;
+    private readonly InputAction m_testmap_Attach;
     public struct TestmapActions
     {
         private @Player m_Wrapper;
@@ -258,6 +302,8 @@ public partial class @Player: IInputActionCollection2, IDisposable
         public InputAction @Dodge => m_Wrapper.m_testmap_Dodge;
         public InputAction @Move => m_Wrapper.m_testmap_Move;
         public InputAction @Jump => m_Wrapper.m_testmap_Jump;
+        public InputAction @Grab => m_Wrapper.m_testmap_Grab;
+        public InputAction @Attach => m_Wrapper.m_testmap_Attach;
         public InputActionMap Get() { return m_Wrapper.m_testmap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -276,6 +322,12 @@ public partial class @Player: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Grab.started += instance.OnGrab;
+            @Grab.performed += instance.OnGrab;
+            @Grab.canceled += instance.OnGrab;
+            @Attach.started += instance.OnAttach;
+            @Attach.performed += instance.OnAttach;
+            @Attach.canceled += instance.OnAttach;
         }
 
         private void UnregisterCallbacks(ITestmapActions instance)
@@ -289,6 +341,12 @@ public partial class @Player: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Grab.started -= instance.OnGrab;
+            @Grab.performed -= instance.OnGrab;
+            @Grab.canceled -= instance.OnGrab;
+            @Attach.started -= instance.OnAttach;
+            @Attach.performed -= instance.OnAttach;
+            @Attach.canceled -= instance.OnAttach;
         }
 
         public void RemoveCallbacks(ITestmapActions instance)
@@ -311,5 +369,7 @@ public partial class @Player: IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnGrab(InputAction.CallbackContext context);
+        void OnAttach(InputAction.CallbackContext context);
     }
 }

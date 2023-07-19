@@ -26,6 +26,10 @@ public class PlayerState_jump : PlayerState
         {
             stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_fall)]);
         }
+        if (input.grab && script.GrabTimerGetTarget())
+        {
+            stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_grab)]);
+        }
     }
     public override void PhysicsUpdate()
     {

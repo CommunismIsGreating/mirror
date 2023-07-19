@@ -9,16 +9,18 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerInput : MonoBehaviour
 {
     Player player;
-    Vector2 axis=>player.testmap.Move.ReadValue<Vector2>();
+    Vector2 Axis => player.testmap.Move.ReadValue<Vector2>();
     public bool Jump => player.testmap.Jump.WasPressedThisFrame();
-    public float AxisX => (float)Math.Round( axis.x, MidpointRounding.AwayFromZero);
+    public float AxisX => (float)Math.Round(Axis.x, MidpointRounding.AwayFromZero);
+    public float AxisY => (float)Math.Round(Axis.y, MidpointRounding.AwayFromZero);
     public bool move => AxisX != 0;
-    public bool dodge=>player.testmap.Dodge.WasPerformedThisFrame();
-
+    public bool dodge => player.testmap.Dodge.WasPerformedThisFrame();
+    public bool grab => player.testmap.Grab.WasPerformedThisFrame();
+    public bool isAttach => player.testmap.Attach.WasPressedThisFrame();
 
     //¥¶¿Ì ‰»Îª∫≥Â
     public bool HasJumpInputBuffer { get; set; }
-    [SerializeField]float jumpInputBuffer=0.5f;
+    [SerializeField] float jumpInputBuffer = 0.5f;
     WaitForSeconds waitJumpInputBuffer;
     private void Awake()
     {
@@ -55,10 +57,9 @@ public class PlayerInput : MonoBehaviour
 
     IEnumerator JumpInputBufferCoroutine()
     {
-        HasJumpInputBuffer= true;
+        HasJumpInputBuffer = true;
         yield return waitJumpInputBuffer;
         HasJumpInputBuffer = false;
     }
 
- 
 }

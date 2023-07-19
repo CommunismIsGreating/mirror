@@ -34,6 +34,10 @@ public class PlayerState_run : PlayerState
         {
             stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_coyoTime)]);
         }
+        if (input.grab && script.GrabTimerGetTarget())
+        {
+            stateMachine.SwitchState(stateMachine.stateTable[typeof(PlayerState_grab)]);
+        }
         currentSpeed =Mathf.MoveTowards(currentSpeed, moveSpeed,acceration*Time.deltaTime );
     }
     public override void PhysicsUpdate()
